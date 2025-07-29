@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weekly Activity Log</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .table-controls {
+      display: flex;
+      justify-content: space-between;
+      max-width: 200px;
+    }
+
+    .nav-btn {
+      padding: 8px 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .nav-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="content"></div>
+
+  <script>
+    const activityData = [
+      [
+        ["Day 1", "Visited Ranganayakulapeta and selected survey area"],
+        ["Day 2", "Conducted door-to-door interactions"],
+        ["Day 3", "Explained health risks from water pollution"],
+        ["Day 4", "Distributed feedback forms and collected responses"],
+        ["Day 5", "Awareness on clean water practices and sanitation"],
+        ["Day 6", "Follow-up interactions with residents for feedback"],
+        ["Day 7", "Compiled data and submitted report to Sachivalayam"]
+      ],
+      [
+        ["Day 1", "Visited Santhapeta, surveyed drainage issues"],
+        ["Day 2", "Educated families on water safety"],
+        ["Day 3", "Explained impact of waste disposal on health"],
+        ["Day 4", "Distributed feedback forms"],
+        ["Day 5", "Collected and analyzed responses"],
+        ["Day 6", "Submitted findings to Sachivalayam"],
+        ["Day 7", "Planned next area's visit"]
+      ],
+      [
+        ["Day 1", "Survey in Mulapeta"],
+        ["Day 2", "Door-to-door awareness on water waste"],
+        ["Day 3", "Observed sewer overflows and stagnant water"],
+        ["Day 4", "Educated residents on reporting issues"],
+        ["Day 5", "Feedback form collection"],
+        ["Day 6", "Data compilation"],
+        ["Day 7", "Reported issues to officials"]
+      ],
+      [
+        ["Day 1", "Revisited Ranganayakulapeta for black water issue"],
+        ["Day 2", "Documented visual samples of water"],
+        ["Day 3", "Educated about waterborne diseases"],
+        ["Day 4", "Awareness on water filtration and hygiene"],
+        ["Day 5", "Feedback collection"],
+        ["Day 6", "Report drafted"],
+        ["Day 7", "Submitted to Sachivalayam"]
+      ],
+      [
+        ["Day 1", "Prepared pH paper test materials for Santhapeta"],
+        ["Day 2", "Tested household water (yellowish green)"],
+        ["Day 3", "Explained results to families"],
+        ["Day 4", "Noted health complaints (stomach pain, tiredness)"],
+        ["Day 5", "Shared simple filtration tips"],
+        ["Day 6", "Revisited for confirmation"],
+        ["Day 7", "Submitted report"]
+      ],
+      [
+        ["Day 1", "Prepared for pH testing in Mulapeta"],
+        ["Day 2", "Conducted tests (pale green/yellow)"],
+        ["Day 3", "Noted visible water contamination"],
+        ["Day 4", "Educated on boiling and filtering"],
+        ["Day 5", "Recorded resident suggestions"],
+        ["Day 6", "Finalized report with visuals"],
+        ["Day 7", "Reported to officials"]
+      ]
+    ];
+
+    let currentWeek = 0;
+
+    function generateTable(index) {
+      const rows = activityData[index]
+        .map(([day, activity]) => `<tr><td>${day}</td><td>${activity}</td></tr>`)
+        .join('');
+      const prevDisabled = index === 0 ? 'disabled' : '';
+      const nextDisabled = index === activityData.length - 1 ? 'disabled' : '';
+
+      return `
+        <h2>Activity Log – Week ${index + 1}</h2>
+        <table>
+          <tr><th>Day</th><th>Activity</th></tr>
+          ${rows}
+        </table>
+        <div class='table-controls'>
+          <button class='nav-btn' onclick='navigateWeek(${index - 1})' ${prevDisabled}>Previous</button>
+          <button class='nav-btn' onclick='navigateWeek(${index + 1})' ${nextDisabled}>Next</button>
+        </div>
+      `;
+    }
+
+    function navigateWeek(index) {
+      if (index < 0 || index >= activityData.length) return;
+      currentWeek = index;
+      updateContent(generateTable(index));
+    }
+
+    function updateContent(html) {
+      document.getElementById("content").innerHTML = html;
+    }
+
+    // Load the first week's data on page load
+    window.onload = function () {
+      navigateWeek(currentWeek);
+    };
+  </script>
+
+</body>
+</html>
